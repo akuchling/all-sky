@@ -1,0 +1,26 @@
+{
+ "title": "All-Sky Images",
+
+ "images": [
+    {
+      "filename": "radio_haslam_full.jpg",
+      "title": "Radio"
+    },
+    {
+      "filename": "ir_cobe_full.jpg",
+      "title": "Infrared"
+    },
+    {
+      "filename": "optical_eso_full.jpg",
+      "title": "Visible light"
+    },
+    {
+      "filename": "xray_rosat_full.jpg",
+      "title": "X-Ray"
+    },
+    {
+      "filename": "gamma_fermi_5yr_full.jpg",
+      "title": "Gamma-ray"
+    }
+ ]
+}
