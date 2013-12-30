@@ -1,6 +1,6 @@
 
-all-sky HTML editor
-======================
+all-sky HTML image manipulator
+==============================
 
 Displays images and allows combining them together.
 
@@ -14,7 +14,7 @@ Can be used in any HTML5 browser.
 License
 -------
 
-Copyright 2013 Green Dragonfly LLC.
+Copyright 2013 Andrew M. Kuchling.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
