@@ -11,6 +11,19 @@ Requirements
 Can be used in any HTML5 browser.
 
 
+Trying it out
+-------------
+
+Currently the files need to be retrieved via an HTTP server; the various
+paths are not correct for running directly from the local file system.
+You can run a basic local server by remaining in the same directory as
+this README and then running the command::
+
+    python -m SimpleHTTPServer
+
+You can then view the app by going to http://localhost:8000/.
+
+
 License
 -------
 
