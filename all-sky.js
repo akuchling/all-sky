@@ -34,7 +34,6 @@ function load_index(data, textStatus, xhr)
 
     // Create image objects.
     image_list = $('#div-image-list');
-    $('body').append(image_list);
     for(i = 0; i < images.length; i++) {
 	var im = images[i];
 	var image_path = 'images/allsky/' + im['filename'];
@@ -47,20 +46,23 @@ function load_index(data, textStatus, xhr)
 
 	// Create slider widget.
 	// XXX what should the upper limit be?
-	elem = $('<input type="range" min="0" max="100" step="1" value="50" />');
-	elem.addClass("range-slider");
-	image_list.append(elem);
-	elem.change(update_result);
+	image_list.append('<p><input class="range-slider" type="range" min="0" max="100" step="1" value="50" /></p>');
 
 	// Create image that will be used in the result display.
 	elem = $("<img/>");
 	elem.attr('src', image_path);
-	$('#div-result').append(elem);
+	$('#div-result-image').append(elem);
+	// XXX need to position this more adaptively.
 	elem.addClass('image-component').css({
            'position': 'absolute',
-	    'top': '0px', 'left': '0px'
+	    'top': '0px', 'left': '0px',
+	    'z-index': (i+1)
 	});
     }
+
+    $('#div-result-image').css({'position': 'relative',
+			       'top': '0px', 'left': '0px'});
+    $('.range-slider').change(update_result);
 
     // Perform an initial update
     update_result();

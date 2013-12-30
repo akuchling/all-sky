@@ -1,20 +1,46 @@
 <html>
-  <script src="jquery-1.8.3.js"></script>
-  <script src="all-sky.js"></script>
   <head>
+    <script src="jquery-1.8.3.js"></script>
+    <script src="static/jqm/jquery.mobile-1.4.0.js"></script>
+    <script src="all-sky.js"></script>
+    <link rel="stylesheet" href="static/jqm/jquery.mobile-1.4.0.css" />
   </head><body data-index="images/allsky/index.json">
-  <h1>Image Combiner: <span class="title"></span></h1>
 
-  <div id="div-result">
-    <p>Result image:</p>
+  <div data-role="page">
+    <div data-role="header">
+      Image Combiner: <span class="title"></span>
+    </div>
+
+    <div data-role="content">
+      <div id="div-result">
+	<p>Result image:</p>
+	<div id="div-result-image">
+	</div>
+      </div>
+
+      <div id="div-image-list">
+	<pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+	<form>
+	</form>
+      </div>
+
+    </div>
   </div>
-
-  <br clear="all" />
-
-  <div id="div-image-list">
-    <form>
-    </form>
-  </div>
-
   </body>
 </html>
