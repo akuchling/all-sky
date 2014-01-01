@@ -15,7 +15,7 @@ function update_result()
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     // expected: (sliders.length == image_elems.length)
-    for(i = 0; i < image_elems.length - 1; i++) {
+    for(i = 0; i < image_elems.length; i++) {
 	context.save();
 	value = parseFloat(sliders[i].value);
 	context.globalAlpha = value / 100;
