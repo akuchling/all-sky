@@ -40,17 +40,15 @@ function load_index(data, textStatus, xhr)
 	var image_elem;
 
 	// Create image displaying the original and the slider widget.
-	image_elem = $("<img/>", {
+	elem = $('<p><img /><br /><input class="range-slider" type="range" min="0" max="100" step="1" value="50" /></p>');
+	elem.children().filter('img').attr({
 	   'src': image_path,
 	   'width': 205, 'height': 105,
-	   'class': 'image-original'});
-	image_elem.data('index', i);
-	elem = $('<p><input class="range-slider" type="range" min="0" max="100" step="1" value="50" /></p>');
-	elem.append(image_elem);
+	   'class': 'image-original'}).data('index', i);
 	$('#div-image-list').append(elem);
 
 	// Create image that will be used in the result display.
-	elem = $("<img/>", {src: image_path});
+	elem = $("<img/>", {src: image_path, width:500});
 	$('#div-result-image').append(elem);
 	// XXX need to position this more adaptively.
 	elem.addClass('image-component').css({
