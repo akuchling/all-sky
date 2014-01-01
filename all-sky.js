@@ -10,11 +10,18 @@ function update_result()
     var range_elem, value;
     var sliders = $('.range-slider');
     var image_elems = $('img.image-component');
+    var canvas = $('#canvas-result').get(0);
+    var context = canvas.getContext("2d");
 
+    context.clearRect(0, 0, canvas.width, canvas.height);
     // expected: (sliders.length == image_elems.length)
-    for(i = 0; i < image_elems.length; i++) {
+    for(i = 0; i < image_elems.length - 1; i++) {
+	context.save();
 	value = parseFloat(sliders[i].value);
-	$(image_elems[i]).css('opacity', value / 100);
+	context.globalAlpha = value / 100;
+	context.drawImage(image_elems[i], 0, 0);
+	context.restore();
+	//$(image_elems[i]).css('opacity', value / 100);
     }
 }
 
@@ -44,22 +51,10 @@ function load_index(data, textStatus, xhr)
 	elem.children().filter('img').attr({
 	   'src': image_path,
 	   'width': 205, 'height': 105,
-	   'class': 'image-original'}).data('index', i);
+	   'class': 'image-component'}).data('index', i);
 	$('#div-image-list').append(elem);
-
-	// Create image that will be used in the result display.
-	elem = $("<img/>", {src: image_path, width:500});
-	$('#div-result-image').append(elem);
-	// XXX need to position this more adaptively.
-	elem.addClass('image-component').css({
-           'position': 'absolute',
-	    'top': '0px', 'left': '0px',
-	    'z-index': (i+1)
-	});
     }
 
-    $('#div-result-image').css({'position': 'relative',
-			       'top': '0px', 'left': '0px'});
     $('.range-slider').change(update_result);
 
     // Perform an initial update
