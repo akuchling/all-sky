@@ -95,14 +95,11 @@ function update_result()
 	    return context.getImageData(0, 0, canvas.width, canvas.height);
 	}).toArray();
 
-    // XXX clearRect() still needed?
-    context.clearRect(0, 0, canvas.width, canvas.height);
-
     // expected: (sliders.length == image_elems.length)
     imageData = context.createImageData(canvas.width, canvas.height);
     for(i = 0; i < canvas.width; i++) {
 	for(j = 0; j < canvas.height; j++) {
-	    var index = (i + j * canvas.width) * 4;
+	    var index = (i + j * imageData.width) * 4;
 	    var alpha = 1.0;
 	    var data = imageData.data;
 
@@ -119,7 +116,8 @@ function update_result()
 	    data[index + 3] = alpha * 255;
 	}
     }
-    context.putImageData(imageData, 0, 0, 0, 0, canvas.width, canvas.height);
+    context.putImageData(imageData, 0, 0,
+			 0, 0, imageData.width, imageData.height);
 }
 
 // NOT USED: combine the images using the CSS opacity property.
@@ -155,7 +153,6 @@ function load_index(data, textStatus, xhr)
     var i;
     var img;
     var elem;
-    var image_list;
     var num_images;
 
     $(".title").text(title);
@@ -180,7 +177,6 @@ function load_index(data, textStatus, xhr)
     }
 
     // Create image objects.
-    image_list = $('#div-image-list');
     for(i = 0; i < images.length; i++) {
 	var im = images[i];
 	var image_path = 'images/allsky/' + im['filename'];
@@ -200,6 +196,7 @@ function load_index(data, textStatus, xhr)
 	   'class': 'image-component'}).data('index', i);
     }
 
+    // Make slider adjustments update the displayed image.
     $('.range-slider').change(update_result);
 }
 
