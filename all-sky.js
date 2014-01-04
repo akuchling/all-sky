@@ -104,7 +104,9 @@ function load_index(data, textStatus, xhr)
 	var image_elem;
 
 	// Create image displaying the original and the slider widget.
-	elem = $('<div class="component"><p><img /><br /><input class="range-slider" type="range" min="0" max="100" step="1" value="50" /></p></div>');
+	elem = $('<div class="component"><p>' +
+		 im['title'] +
+		 '<br /><img /><br /><input class="range-slider" type="range" min="0" max="100" step="1" value="50" /></p></div>');
 	$('#div-image-list').append(elem);
 
 	// Fill in the elements on the image
