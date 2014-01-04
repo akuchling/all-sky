@@ -8,13 +8,31 @@
 function verify_images_ok(images_expected)
 {
     var i;
-    var x, y;
+    var width, height;
 
     var image_list = $("img.image-component");
+
+    if (image_list.length == 0) {
+	alert("No images loaded.");
+	return false;
+    }
     if (image_list.length != images_expected) {
 	alert("Expected to load " + images_expected + " images, but " +
 	      image_list.length + " were loaded.");
 	return false;
+    }
+
+    // Check that all of the image sizes match
+    width = image_list[0].width;
+    height = image_list[0].height;
+    for(i = 1; i < image_list.length; i++) {
+	if (width != image_list[i].width ||
+	    height != image_list[i].height) {
+	    alert("Image #" + (i+1) + " size mismatch: expected " +
+		  width + "x" + height + "; got " +
+		  image_list[i].width + "x" + image_list[i].height);
+	    return false;
+	    }
     }
 
     return true;
