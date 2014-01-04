@@ -193,7 +193,7 @@ function load_index(data, textStatus, xhr)
 	   'src': image_path,
 	   'onload': image_loaded,
 	   'width': 205, 'height': 105,
-	   'class': 'image-component'}).data('index', i);
+	   'class': 'image-component'});
     }
 
     // Make slider adjustments update the displayed image.
