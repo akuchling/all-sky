@@ -22,7 +22,7 @@ function verify_images_ok(images_expected)
 	return false;
     }
 
-    // Check that all of the image sizes match
+    // Check that all of the image sizes match.
     width = image_list[0].width;
     height = image_list[0].height;
     for(i = 1; i < image_list.length; i++) {
@@ -35,13 +35,77 @@ function verify_images_ok(images_expected)
 	    }
     }
 
+    // Set the size of the canvas correspondingly.
+    $('#canvas-result').attr({'width': width, 'height': height});
+
     return true;
 }
 
 
-// Looks at all of the sliders and updates the CSS opacities in the result
-// image.
+// Convert an IMG element to a canvas element.
+// Taken from <http://davidwalsh.name/convert-canvas-image>.
+function image_to_canvas(image)
+{
+    var canvas = $("<canvas />").get(0);
+
+    canvas.width = image.width;
+    canvas.height = image.height;
+    canvas.getContext("2d").drawImage(image, 0, 0);
+    return canvas;
+}
+
+// Looks at all of the sliders and computes a result image.
 function update_result()
+{
+    var i, j, k;
+    var range_elem, value;
+    var canvas = $('#canvas-result').get(0);
+    var context = canvas.getContext("2d");
+    var imageData;
+
+    var slider_values = $('.range-slider').map(
+	function (index, elem) {
+	    return parseFloat(elem.value) / 100;
+	}).toArray();
+    var image_comp = $('img.image-component').map(
+	function (index, elem) {
+	    var canvas = image_to_canvas(elem);
+	    var context = canvas.getContext("2d");
+	    return context.getImageData(0, 0, canvas.width, canvas.height);
+	}).toArray();
+
+    // XXX clearRect() still needed?
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // expected: (sliders.length == image_elems.length)
+    imageData = context.createImageData(canvas.width, canvas.height);
+    function combine(v1, alpha1, v2, alpha2) {
+	return v2 * alpha2 + (1 - alpha2) * alpha1 * v1;
+    }
+    for(i = 0; i < canvas.width; i++) {
+	for(j = 0; j < canvas.height; j++) {
+	    var index = (i + j * canvas.width) * 4;
+	    var alpha = 1.0;
+	    var data = imageData.data;
+
+	    for(k = 0; k < image_comp.length; k++) {
+		var alpha2 = slider_values[k]
+		data[index] = combine(data[index], alpha,
+				      image_comp[k].data[index], alpha2);
+		data[index+1] = combine(data[index+1], alpha,
+					image_comp[k].data[index+1], alpha2);
+		data[index+2] = combine(data[index+2], alpha,
+			image_comp[k].data[index+2], alpha2);
+		alpha = (1 - (1 - alpha)*(1 - alpha2));
+	    }
+	    data[index + 3] = alpha * 255;
+	}
+    }
+    context.putImageData(imageData, 0, 0, 0, 0, canvas.width, canvas.height);
+}
+
+// NOT USED: combine the images using the CSS opacity property.
+function update_result_opacity()
 {
     var i;
     var range_elem, value;
@@ -61,6 +125,7 @@ function update_result()
 	//$(image_elems[i]).css('opacity', value / 100);
     }
 }
+
 
 
 // Once the JSON index of images has been received, create image objects
