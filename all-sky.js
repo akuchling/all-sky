@@ -54,6 +54,27 @@ function image_to_canvas(image)
     return canvas;
 }
 
+//
+// Pixel-blending functions that can be used by update_result().
+//
+
+// NOT USED: Normal blend
+function combine_normal(v1, alpha1, v2, alpha2) {
+return v2 * alpha2 + (1 - alpha2) * alpha1 * v1;
+}
+
+// Screen blend
+function combine_screenblend(v1, alpha1, v2, alpha2) {
+    var value;
+    // Invert both colours.
+    v1 = 255 - v1; v2 = 255 - v2;
+    // Carry out the normal blend operation.
+    value = v2 * alpha2 + (1 - alpha2) * alpha1 * v1;
+    // Invert result colour.
+    value = 255 - value;
+    return value;
+}
+
 // Looks at all of the sliders and computes a result image.
 function update_result()
 {
@@ -79,9 +100,6 @@ function update_result()
 
     // expected: (sliders.length == image_elems.length)
     imageData = context.createImageData(canvas.width, canvas.height);
-    function combine(v1, alpha1, v2, alpha2) {
-	return v2 * alpha2 + (1 - alpha2) * alpha1 * v1;
-    }
     for(i = 0; i < canvas.width; i++) {
 	for(j = 0; j < canvas.height; j++) {
 	    var index = (i + j * canvas.width) * 4;
@@ -90,11 +108,11 @@ function update_result()
 
 	    for(k = 0; k < image_comp.length; k++) {
 		var alpha2 = slider_values[k]
-		data[index] = combine(data[index], alpha,
+		data[index] = combine_screenblend(data[index], alpha,
 				      image_comp[k].data[index], alpha2);
-		data[index+1] = combine(data[index+1], alpha,
+		data[index+1] = combine_screenblend(data[index+1], alpha,
 					image_comp[k].data[index+1], alpha2);
-		data[index+2] = combine(data[index+2], alpha,
+		data[index+2] = combine_screenblend(data[index+2], alpha,
 			image_comp[k].data[index+2], alpha2);
 		alpha = (1 - (1 - alpha)*(1 - alpha2));
 	    }
