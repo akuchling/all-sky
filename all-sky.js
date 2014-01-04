@@ -36,7 +36,8 @@ function verify_images_ok(images_expected)
     }
 
     // Set the size of the canvas correspondingly.
-    $('#canvas-result').attr({'width': width, 'height': height});
+    $('#canvas-result').attr({'width': width, 'height': height})
+                       .data('initialized', true);
 
     return true;
 }
@@ -94,6 +95,14 @@ function update_result()
 	    var context = canvas.getContext("2d");
 	    return context.getImageData(0, 0, canvas.width, canvas.height);
 	}).toArray();
+
+    // Check that the canvas has been resized as we expect.
+    if (!$("#canvas-result").data('initialized')) {
+	alert("Initial set-up not performed; probably a bug in the all-sky application");
+	// Disable all of the slider event handlers.
+	$('.range-slider').off('change');
+	return;
+    }
 
     // expected: (sliders.length == image_elems.length)
     imageData = context.createImageData(canvas.width, canvas.height);
