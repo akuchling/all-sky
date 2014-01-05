@@ -173,8 +173,10 @@ function load_index(data, textStatus, xhr)
 	num_images--;
 	if (num_images == 0) {
 	    // There needs to be a slight delay after the last image
-	    // is loaded.  Without the delay, verify_images_ok()
-	    // only finds N-1 images and fails.
+	    // is loaded.  (This may be because Chrome fires the event
+	    // before the image's attributes have been changed.)
+	    // Without the delay, verify_images_ok() only finds N-1
+	    // images and fails.
 	    setTimeout(function () {
 		// Sanity check the images
 		if (verify_images_ok(images.length)) {
@@ -191,7 +193,7 @@ function load_index(data, textStatus, xhr)
 	var image_path = 'images/allsky/' + im['filename'];
 	var image_elem;
 
-	// Create image displaying the original and the slider widget.
+	// Create thumbnails for images and the slider widgets.
 	elem = $('<div class="component"><p><img /><br />' +
 		 im['title'] +
 		 ': 0&nbsp;<input class="range-slider" type="range" min="0" max="100" step="1" value="50" />&nbsp;100</p><hr /></div>');
@@ -199,10 +201,17 @@ function load_index(data, textStatus, xhr)
 
 	// Fill in the elements on the image
 	elem.find('img').attr({
-	   'src': image_path,
-	   'onload': image_loaded,
-	   'width': 205, 'height': 105,
-	   'class': 'image-component'});
+	    'src': image_path,
+	    'width': 205, 'height': 105,
+	    'class': 'image-thumbnail'});
+
+	// XXX should replace use of Image.onLoad with something else, because
+	// the event isn't fired reliably.
+	image_elem = $('<img />', {
+	    'class': 'image-component'
+	}).on("load", image_loaded);
+	image_elem.attr('src', image_path);
+	$("#div-image-masters").append(image_elem);
     }
 
     // Make slider adjustments update the displayed image.
