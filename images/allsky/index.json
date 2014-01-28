@@ -3,23 +3,23 @@
 
  "images": [
     {
-      "filename": "radio_haslam_full.jpg",
+      "filename": "allsky_radio_haslam_full.jpg",
       "title": "Radio"
     },
     {
-      "filename": "ir_cobe_full.jpg",
+      "filename": "allsky_ir_2mass_full.jpg",
       "title": "Infrared"
     },
     {
-      "filename": "xray_rosat_full.jpg",
+      "filename": "allsky_xray_rosat_full.jpg",
       "title": "X-Ray"
     },
     {
-      "filename": "gamma_fermi5yr_full.jpg",
+      "filename": "allsky_gamma_fermi5yr_full.jpg",
       "title": "Gamma-ray"
     },
     {
-      "filename": "optical_eso_full.jpg",
+      "filename": "allsky_optical_eso_full.jpg",
       "title": "Visible light"
     }
  ]
