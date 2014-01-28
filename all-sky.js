@@ -190,7 +190,8 @@ function load_index(data, textStatus, xhr)
     // Create image objects.
     for(i = 0; i < images.length; i++) {
 	var im = images[i];
-	var image_path = 'images/allsky/' + im['filename'];
+	// XXX need to fix this
+	var image_path = 'images/colorized/' + im['filename'];
 	var image_elem;
 
 	// Create thumbnails for images and the slider widgets.
@@ -221,7 +222,7 @@ function load_index(data, textStatus, xhr)
 function setup_page() {
     var index_url = $("body").data("index");
     // XXX figure out the exact path later.
-    index_url = "images/allsky/index.json";
+    index_url = "images/colorized/index.json";
     $.getJSON(index_url, {}, load_index);
 }
 

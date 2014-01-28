@@ -1,0 +1,26 @@
+{
+ "title": "All-Sky Images",
+
+ "images": [
+    {
+      "filename": "allsky_radio_orange.png",
+      "title": "Radio (orange)"
+    },
+    {
+      "filename": "allsky_ir_red.png",
+      "title": "Infrared (red)"
+    },
+    {
+      "filename": "allsky_xray_purple.png",
+      "title": "X-Ray (purple)"
+    },
+    {
+      "filename": "allsky_gammaray_pink.png",
+      "title": "Gamma-ray (pink)"
+    },
+    {
+      "filename": "allsky_optical_yellow.png",
+      "title": "Visible light (yellow)"
+    }
+ ]
+}
