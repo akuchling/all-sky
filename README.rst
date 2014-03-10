@@ -23,6 +23,17 @@ this README and then running the command::
 
 You can then view the app by going to http://localhost:8000/.
 
+Tasks
+-----
+
+Polish the design
+
+Limit the user to selecting at most three images
+
+Display the legend for each image
+
+Set the URL dynamically
+
 
 License
 -------
