@@ -1,32 +1,24 @@
-<html>
+<html lang="en">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="jquery-1.8.3.js"></script>
-    <script src="static/jqm/jquery.mobile-1.4.0.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
     <script src="all-sky.js"></script>
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
 #div-image-list p {align: center}
 
     </style>
-
-    <link rel="stylesheet" href="static/jqm/jquery.mobile-1.4.0.css" />
   </head><body data-index="images/colorized/index.json">
 
-  <div data-role="page">
-    <div data-role="header">
-      Image Combiner: <span class="title"></span>
-    </div>
+  <h1>Image Combiner: <span class="title"></span></h1>
 
-    <div data-role="content">
-      <div class="ui-grid-a ui-responsive">
-        <div id="div-result" class="ui-block-a">
-	    <p>Result image:</p>
-	    <canvas id="canvas-result" width="600" height="300" />
-        </div>
-
-        <div id="div-image-list" class="ui-block-b">
-        </div>
-      </div>
-     </div> <!-- end of ui-grid-a -->
+  <div id="div-image-list" class="col-md-3">
+  </div>
+  <div id="div-result" class="col-md-9">
+    <p>Result image:</p>
+    <canvas id="canvas-result" width="600" height="300" />
   </div>
 
   <div id="div-image-masters" style="display: none">
