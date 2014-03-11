@@ -281,7 +281,17 @@ function load_index(data, textStatus, xhr)
 
 function setup_page() {
     var index_url = $("body").data("index");
+
+    // Set global variable to image directory.  Caution: this must leave
+    // on the trailing slash.
     IMAGE_PATH = index_url.replace('index.json', '');
+
+    // Set handler to report JSON errors to the user.
+    $( document ).ajaxError(function() {
+	alert("Error loading JSON index file");
+    });
+
+    // Load the image descriptions
     $.getJSON(index_url, {}, load_index);
 }
 

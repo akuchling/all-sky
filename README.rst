@@ -32,8 +32,6 @@ Tasks
 
 Polish the design
 
-Puzzling failure when index.json is malformed
-
 Set the URL dynamically to allow bookmarking
 
 
