@@ -4,6 +4,9 @@ all-sky HTML image manipulator
 
 Displays images and allows combining them together.
 
+The current development tree is available at
+<https://github.com/akuchling/all-sky>.
+
 
 Requirements
 ------------
@@ -22,6 +25,7 @@ this README and then running the command::
     python -m SimpleHTTPServer
 
 You can then view the app by going to http://localhost:8000/.
+
 
 Tasks
 -----

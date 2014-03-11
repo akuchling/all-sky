@@ -1,4 +1,11 @@
 
+/*
+ Copyright 2013 Andrew M. Kuchling.
+
+ See README.rst for the license for this code.
+ */
+
+
 // XXX styling to do: have the component images be smaller, and put them
 // into a sensible display.
 
