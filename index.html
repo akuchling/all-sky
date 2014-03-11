@@ -8,11 +8,12 @@
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
 #div-image-list p {align: center}
+.component-selected {background: #cccccc;}
 
     </style>
   </head><body data-index="images/colorized/index.json">
 
-  <h1>Image Combiner: <span class="title"></span></h1>
+  <h1 class="page-header">Image Combiner: <span class="title"></span></h1>
 
   <div id="div-image-list" class="col-md-3">
   </div>
@@ -22,6 +23,7 @@
   </div>
 
   <div id="div-image-masters" style="display: none">
+    <!-- Filled in by the load_index() JS function -->
   </div>
 
   </body>

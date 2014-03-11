@@ -2,6 +2,9 @@
 // XXX styling to do: have the component images be smaller, and put them
 // into a sensible display.
 
+// Maximum number of component images that the user can select.
+var MAXIMUM_SELECTED_IMAGES = 3;
+
 // Sanity check the images; they should all be the same size.
 // Will display an error message if there's a problem; the intention is
 // that the developer will correct the JSON file or the images as necessary.
@@ -85,10 +88,17 @@ function update_result()
     var context = canvas.getContext("2d");
     var imageData;
 
+    var selected_images = $('.component-selected').map(
+	function (index, elem) {
+	    return $(elem).data('component-index');
+	}).toArray();
     var slider_values = $('.range-slider').map(
 	function (index, elem) {
 	    return parseFloat(elem.value) / 100;
 	}).toArray();
+
+    // XXX could make this faster by only converting the images we
+    // actually need.
     var image_comp = $('img.image-component').map(
 	function (index, elem) {
 	    var canvas = image_to_canvas(elem);
@@ -112,14 +122,15 @@ function update_result()
 	    var alpha = 1.0;
 	    var data = imageData.data;
 
-	    for(k = 0; k < image_comp.length; k++) {
-		var alpha2 = slider_values[k]
+	    for(k = 0; k < selected_images.length; k++) {
+		var kp = selected_images[k];
+		var alpha2 = slider_values[kp];
 		data[index] = combine_screenblend(data[index], alpha,
-				      image_comp[k].data[index], alpha2);
+				      image_comp[kp].data[index], alpha2);
 		data[index+1] = combine_screenblend(data[index+1], alpha,
-					image_comp[k].data[index+1], alpha2);
+					image_comp[kp].data[index+1], alpha2);
 		data[index+2] = combine_screenblend(data[index+2], alpha,
-			image_comp[k].data[index+2], alpha2);
+			image_comp[kp].data[index+2], alpha2);
 		alpha = (1 - (1 - alpha)*(1 - alpha2));
 	    }
 	    data[index + 3] = alpha * 255;
@@ -190,21 +201,51 @@ function load_index(data, textStatus, xhr)
     // Create image objects.
     for(i = 0; i < images.length; i++) {
 	var im = images[i];
-	// XXX need to fix this
+	// XXX need to fix this from being hard-wired
 	var image_path = 'images/colorized/' + im['filename'];
 	var image_elem;
 
 	// Create thumbnails for images and the slider widgets.
 	elem = $('<div class="component"><p><img /><br />' +
 		 im['title'] +
-		 ': 0&nbsp;<input class="range-slider" type="range" min="0" max="100" step="1" value="50" />&nbsp;100</p><hr /></div>');
+		 ':<br /><input class="range-slider" type="range" min="0" max="100" step="1" value="50" /></p><hr /></div>');
 	$('#div-image-list').append(elem);
+	elem.data('component-index', i);
+
+	// We don't want clicking on the slider to also trigger the select/deselect of a component.
+	elem.find('input.range-slider').on('mousedown mouseup click', function (event) {
+	    event.stopPropagation();
+	});
 
 	// Fill in the elements on the image
 	elem.find('img').attr({
 	    'src': image_path,
 	    'width': 205, 'height': 105,
-	    'class': 'image-thumbnail'});
+	    'class': 'image-thumbnail',
+	});
+	elem.click(function (event) {
+	    // Check number of selected components
+	    if ($(this).hasClass('component-selected')) {
+		// Toggle the class off.
+		$(this).toggleClass('component-selected');
+		update_result();
+	    }
+	    else if ($("#div-image-list .component-selected").length < MAXIMUM_SELECTED_IMAGES) {
+		// Haven't selected the maximum number yet, so toggle the class on.
+		$(this).toggleClass('component-selected');
+		update_result();
+	    } else {
+		// Too many selected; warn the user.
+		// XXX fix this popover.
+		$('body').popover({
+		    placement: "right",
+		    trigger: "manual",
+		    selector: this,
+		    title: "Can't select another image",
+		    content: "You can only select up to " + MAXIMUM_SELECTED_IMAGES.toString() + " images."
+		});
+	    }
+	});
 
 	// XXX should replace use of Image.onLoad with something else, because
 	// the event isn't fired reliably.
