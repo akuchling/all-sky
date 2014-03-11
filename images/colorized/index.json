@@ -4,23 +4,28 @@
  "images": [
     {
       "filename": "allsky_radio_orange.png",
-      "title": "Radio (orange)"
+      "title": "Radio (orange)",
+      "legend": "Radio image shown in orange; credit XXX."
     },
     {
       "filename": "allsky_ir_red.png",
-      "title": "Infrared (red)"
+      "title": "Infrared (red)",
+      "legend": "Infrared image shown in red; credit XXX."
     },
     {
       "filename": "allsky_xray_purple.png",
-      "title": "X-Ray (purple)"
+      "title": "X-Ray (purple)",
+      "legend": "X-ray image shown in purple; credit XXX."
     },
     {
       "filename": "allsky_gammaray_pink.png",
-      "title": "Gamma-ray (pink)"
+      "title": "Gamma-ray (pink)",
+      "legend": "Gamma-ray image shown in pink; credit XXX."
     },
     {
       "filename": "allsky_optical_yellow.png",
-      "title": "Visible light (yellow)"
+      "title": "Visible light (yellow)",
+      "legend": "Visible-light image in yellow; credit XXX."
     }
  ]
 }

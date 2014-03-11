@@ -142,6 +142,15 @@ function update_result()
     }
     context.putImageData(imageData, 0, 0,
 			 0, 0, imageData.width, imageData.height);
+
+    // Update the displayed credits
+    $("#credits").html("");
+    $('.component-selected').each(
+	function (index, elem) {
+	    var legend = $(elem).data('legend');
+	    $("#credits").append(document.createTextNode(legend));
+	    $("#credits").append('<br />');
+	});
 }
 
 // NOT USED: combine the images using the CSS opacity property.
@@ -213,7 +222,7 @@ function load_index(data, textStatus, xhr)
 		 im['title'] +
 		 ':<br /><input class="range-slider" type="range" min="0" max="100" step="1" value="50" /></p><hr /></div>');
 	$('#div-image-list').append(elem);
-	elem.data('component-index', i);
+	elem.data('component-index', i).data('legend', im['legend']);
 
 	// We don't want clicking on the slider to also trigger the select/deselect of a component.
 	elem.find('input.range-slider').on('mousedown mouseup click', function (event) {

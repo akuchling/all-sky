@@ -28,11 +28,9 @@ Tasks
 
 Polish the design
 
-Limit the user to selecting at most three images
+Puzzling failure when index.json is malformed
 
-Display the legend for each image
-
-Set the URL dynamically
+Set the URL dynamically to allow bookmarking
 
 
 License
