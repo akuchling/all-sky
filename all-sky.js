@@ -5,6 +5,10 @@
 // Maximum number of component images that the user can select.
 var MAXIMUM_SELECTED_IMAGES = 3;
 
+// Path to directory containing the images and index.json.
+// Will be filled in by setup_page().  Should include the trailing '/'.
+var IMAGE_PATH = null;
+
 // Sanity check the images; they should all be the same size.
 // Will display an error message if there's a problem; the intention is
 // that the developer will correct the JSON file or the images as necessary.
@@ -201,8 +205,7 @@ function load_index(data, textStatus, xhr)
     // Create image objects.
     for(i = 0; i < images.length; i++) {
 	var im = images[i];
-	// XXX need to fix this from being hard-wired
-	var image_path = 'images/colorized/' + im['filename'];
+	var image_path = IMAGE_PATH + im['filename'];
 	var image_elem;
 
 	// Create thumbnails for images and the slider widgets.
@@ -262,8 +265,7 @@ function load_index(data, textStatus, xhr)
 
 function setup_page() {
     var index_url = $("body").data("index");
-    // XXX figure out the exact path later.
-    index_url = "images/colorized/index.json";
+    IMAGE_PATH = index_url.replace('index.json', '');
     $.getJSON(index_url, {}, load_index);
 }
 
